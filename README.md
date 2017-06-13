@@ -1,22 +1,47 @@
 # aws-rekognition-faces
 AWS Rekognition for comparing faces 
 
-
-### Images to compare 
-
+### 1 . You need to create a collection of face images
 ```
-Source Image
+aws rekognition create-collection \
+--collection-id "faces" \
+--region us-east-1 \
+--profile user2
 ```
-![alt text](https://s3.amazonaws.com/scottrekognition/Jeff.jpg)
 
-
+### 2. Once step 1 is done you can get the collection name 
 ```
-Target Image
+aws rekognition list-collections \
+--region us-east-1 \
+--profile user2 
 ```
-![alt text](https://s3.amazonaws.com/scottrekognition/jeff2.jpg)
 
+### 3. Add images to the rekognition AI by sending images to it 
+```
+aws rekognition index-faces \
+--image '{"S3Object":{"Bucket":"scottrekognition","Name":"scott.jpg"}}' \
+--collection-id "faces" \
+--region us-east-1 \
+--profile user2
+```
 
+### 4. Test by doing something like this 
+```
+aws rekognition search-faces-by-image \
+--image '{"S3Object":{"Bucket":"bucket-name","Name":"Example.jpg"}}' \
+--collection-id "collection-id" \
+--region us-east-1 \
+--profile adminuser
+```
+```
+or run python3 detect-many.py
+```
 
-### What the outcome should be 
+### Your Response should be something like this 
+```
+Matched With 96.99021911621094% Similarity
+To FaceId : 32276a6d-f838-558a-bc1b-6f6d6e8b79cf
+Which is ImageId : 51b4f021-b8ab-5945-95ed-1c6c02db5b54
+With 99.99979400634766 Confidence
+```
 
-![alt text](https://dl.dropboxusercontent.com/u/32232546/Screen%20Shot%202017-05-15%20at%205.23.47%20PM.png)
