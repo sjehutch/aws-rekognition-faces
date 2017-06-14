@@ -1,5 +1,8 @@
 # aws-rekognition-faces
 AWS Rekognition for comparing faces 
+### Process Flows
+![Process](https://u32232546.dl.dropboxusercontent.com/u/32232546/4324214321.png)
+
 
 ### 1 . You need to create a collection of face images
 ```
